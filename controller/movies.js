@@ -12,9 +12,31 @@ const getMovieByTitlesOrDirectors = (request, response) => {
     movies.directors.find((director) => director.toLowerCase().includes(search.toLowerCase()))
   })
 
-  if (!movies.length) return response.sendStatus(404)
-
   return response.send(SearchEngine)
 }
 
-module.exports = { getAllMovies, getMovieByTitlesOrDirectors }
+const saveNewMovie = (request, response) => {
+  const {
+    title, director, releseDate, rating, runtime, genres
+  } = request.body
+
+  if (!title || !director || !releseDate || !rating || !runtime || !genres) {
+    return response.status(400).send('The Following fields are required: title, director, rating, etc')
+  }
+
+  const newMovie = {
+    title, director, releseDate, rating, runtime, genres
+  }
+
+  movies.push(newMovie)
+
+  return response.status(201).send(newMovie)
+}
+
+
+
+module.exports = {
+  getAllMovies,
+  getMovieByTitlesOrDirectors,
+  saveNewMovie
+}

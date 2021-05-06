@@ -6,7 +6,7 @@ const app = express()
 
 app.get('/movies', getAllMovies)
 
-app.get('./:movies/:title', getMovieByTitle)
+app.get('/movies/:searchbox', getMovieByTitle)
 
 app.all('*', (request, response) => {
   return response.status(404).send('Sorry this is not working')
